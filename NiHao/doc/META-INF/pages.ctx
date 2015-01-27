@@ -1,0 +1,6 @@
+page "/index.jsp" public;
+page "/hello.jsp" private workset testws;
+page "/test.jsp" for test,test2 workset test;
+page "/noadmin.jsp" for test,test2,!admin workset test; //! deny certain group
+page "/test_result.jsp" for test,test2 workset test;
+page ~"/adm/(.+)" for admin workset admin;

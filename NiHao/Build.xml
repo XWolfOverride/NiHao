@@ -1,0 +1,29 @@
+<project name="QCore" basedir="." default="build">
+	<property name="dest" value="release" />
+	<property name="mypath" value="." />
+	<property name="version" value="0.8b" />
+	<basename file="${mypath}" property="myname" />
+	
+	<property name="bin" value="bin" />
+
+	<macrodef name="domyjar">
+		<sequential>
+			<jar destfile="${dest}/${myname}-${version}.jar" basedir="${bin}" excludes="test/**" />
+			<copyfile dest="${dest}/${myname}-${version}.html" src="doc/Info.html"/>
+		</sequential>
+	</macrodef>
+
+	<target name="clean">
+		<delete>
+			<fileset dir="${dest}">
+				<include name="${myname}-*.jar" />
+				<include name="${myname}-*.html" />
+							</fileset>
+		</delete>
+		<delete dir="${dest}/temp" />
+	</target>
+
+	<target name="build" depends="clean">
+		<domyjar/>
+	</target>
+</project>

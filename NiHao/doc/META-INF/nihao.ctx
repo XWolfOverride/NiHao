@@ -1,0 +1,41 @@
+provider DataSourceProvider default MainDatabaseConnection{
+ MainDatabaseConnection
+// AuxiliarDatabaseConnection
+}
+
+provider LogProvider default ConsoleLog{
+ ConsoleLog
+}
+
+object NiHaoConf class nihao.NiHaoConf{
+ loginConf=object class nihao.login.LoginConf{
+  modules=array of nihao.login.ILoginModule{
+   //object class nihao.login.LoginModuleSSL{}
+   object class nihao.login.LoginModuleRequest{}
+  };
+  pageLogin="login.jsp";
+  pageEnd=  "end.jsp";
+  pageError="error.jsp";
+  pageForbidden="forbidden.jsp";
+  excluded=array of String{
+  };
+ };
+ worksetCacheSize=10;
+}
+
+
+object MainDatabaseConnection class nihao.db.DataSourceProviderJDBC{("jdbc:mysql://localhost:3306/qcore")
+ driver="com.mysql.jdbc.Driver";
+ engine="mysql";
+ user="root";
+ password="toor"; 
+}
+
+object ConsoleLog class nihao.log.ConsoleLogProvider{//(map{
+//  ["xwolf.qcore","warn"]
+//  ["xwolf.qcore.db","all"]
+// })
+}
+
+include "query - nihao.ctx";
+include "pages.ctx";

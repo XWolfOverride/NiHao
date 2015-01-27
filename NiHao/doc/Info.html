@@ -1,0 +1,356 @@
+<html>
+ <head>
+ <title>NiHao Help</title>
+ <meta content="text/html" charset="UTF-8" http-equiv="Content-Type" />
+ <style>
+  html{
+   background-color:#DDD;
+  }
+  body{
+   font-family:verdana,tahoma;
+   margin:20px;   
+  }
+  #main{
+   width:900px;
+   display:block;
+   margin:0px auto;
+  }
+  
+  #title{
+   text-indent: 0px;
+   font-size:24px;
+   font-weight: bold;
+  }
+  
+  .section{
+   text-indent: 1.5em;
+   padding-bottom:15px;
+   font-size:12px;
+   border-radius: 4px;
+   -moz-border-radius: 4px;
+   -ms-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   -khtml-border-radius: 4px;
+   background-color:white;
+   -moz-box-shadow:    1px 1px 2px 3px #888;
+   -webkit-box-shadow: 1px 1px 2px 3px #888;
+   box-shadow:         1px 1px 2px 3px #888;
+   padding:10px;
+   margin-bottom:10px;
+   color:#444;
+  }
+  
+  .title{
+   text-indent: 0px;
+   font-weight: bold;
+   cursor:hand;   
+  }
+
+  .title:hover{
+   color:#00C;
+  }
+  
+  pre{
+   text-indent: 0px;
+   font-family:lucida console, monospace;
+   font-size:12px;
+   color:black;
+  }
+  .content{
+   padding-top:10px;  
+  }
+  .inner{
+   text-indent: 0px;  
+   padding-left:10px;
+  }
+ </style>
+ <script>
+ function init(){
+  var divs = document.getElementsByTagName("div");
+  ttl=null;
+  first=false;
+  for(var i = 0; i < divs.length; i++){
+   d=divs[i];
+   if (d.className=="title"){
+	   ttl=d;
+	   d.setAttribute("onclick","divClick(this)");
+   }
+   if (d.className=="content"){
+    if (first)
+     first=false;
+    else
+     d.style.display="none";
+    ttl.david=d;
+   }
+  }
+ }
+ function divClick(sender){
+  if (!sender.david)
+   return;
+  if (sender.david.style.display=="none")
+	  sender.david.style.display="";
+  else
+	  sender.david.style.display="none";
+ }
+ </script>
+ </head>
+<body onload='init()'>
+<div id="main">
+<div class="section">
+<div id="title" class="title">
+NiHao 0.8 (C) XWolf 2012
+</div>
+<div class="content">
+ NiHao es un framework de aplicaciones autocontenido, por lo que NO esta basado en ningún otro
+ framework ni librería más que lo que corresponde a J2EE.<br>
+ Esta diseñado para ser amable con la memoria mientras se busca la mayor rapidez de
+ ejecución posible. Equilibrandolo finalmente con la sencillez de configuración y
+ mantenimiento. Haciendolo perfecto tanto para grándes como pequeñas aplicaciones.
+ <p/>
+ El diseño interno de QCore está basado en técnicas vistas en multitud de frameworks actuales, pero tiene su propia implementación, mejornado la integración y eliminando código e instancias innecesiarias.
+ <p />
+ Una de esas técnicas es la capacidad de configurar el framework usando un archivo
+ de contexto, como hace <a href="http://www.springsource.org/">Srping</a> pero en vez
+ de usar una estructura en XML, usa un lenguaje propio, facilitando enormemente la
+ lectura y modificación de dicho archivo.
+ <p />
+ O <a href="http://ibatis.apache.org/">Ibatis</a>, para el acceso a base de datos.
+ Plasmando en este mismo fichero de confugración la configuración de acceso a datos, y
+ las queries que atacan a esta.<br>
+ Una peculiaridad de QCore es la posibilidad de definir el engine de base de datos
+ usado, y poder realizar multiples queris para los distintos engines.<br>
+ De esa manera QCore es capaz de decidir la query a usar dependiendo del engine del
+ acceso a datos, y por lo tanto facilitar el cambio de engine de una base de datos a
+ otra sin penalización en el desarroyo.
+</div>
+</div>
+
+<div class="section">
+<div class="title">Instalación:</div>
+<div class="content">
+ Ejecutar en una Base de datos el script correspondiente a su engine, este generará
+ la estructura, y datos básicos para el uso de QCore.<br>
+ QCore busca por defecto el archivo de contexto qcore.ctx dentro de META-INF. Se publican
+ unos archivos .ctx de ejemplo para la configuración inicial.<br>
+ Añadir QCore.jar como libreria de aplicación, y añadir al META-INF de la aplicación
+ web los archivos de ejeplo situados en doc/META-INF.<br>
+ Editar el web.xml, añadiendo el correspondiente filtro, es recomendable usar este filtro como primer filtro
+ <pre>
+&lt;filter&gt;
+  &lt;filter-name&gt;SessionFilter&lt;/filter-name&gt;
+  &lt;filter-class&gt;qcore.WebFilter&lt;/filter-class&gt;
+&lt;/filter&gt;
+
+&lt;filter-mapping&gt;
+  &lt;filter-name&gt;SessionFilter&lt;/filter-name&gt;
+  &lt;url-pattern&gt;*.do&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+&lt;filter-mapping&gt;
+  &lt;filter-name&gt;SessionFilter&lt;/filter-name&gt;
+  &lt;url-pattern&gt;*.jsp&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+&lt;filter-mapping&gt;
+  &lt;filter-name&gt;SessionFilter&lt;/filter-name&gt;
+  &lt;url-pattern&gt;*.html&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+</pre>
+</div>
+</div>
+
+<div class="section">
+<div class="title">Lenguaje de contexto:</div>
+<div class="content">
+ QCore utiliza un formato propio para definir una persistencia de objetos que son instanciados como objetos para definir
+ distintas configuraciones y estructuras complejas.
+ 
+ QCore leera por defecto el archivo localizado en NETA-INF/qcore.ctx el cual ha de definirse en el proyecto de aplicación
+
+<div class="title" style="padding-top:5px">Definición de Proveedores</div>
+<div class="content" style="padding-top:0px">
+ <pre> Estructura:
+  provider &lt;name&gt; default &lt;defaultname&gt;{
+   &lt;implname&gt;
+   &lt;implname&gt;
+  }
+ </pre>
+ El nombre &lt;name&gt; ha de coincidir con el de la clase del proveedor (sin el paquete)
+ El nombre &lt;defaultname&gt; ha de estar en la lista de &lt;implname&gt;
+ Los proveedores adicionales han de estar listados en &lt;implname&gt;
+</div>
+
+<div class="title" style="padding-top:5px">Definición de Objeto</div>
+<div class="content" style="padding-top:0px">
+ <pre> Estructura:
+  object [&lt;name&gt;] class &lt;class&gt;{[(&lt;parameter&gt;[,&lt;parameter&gt;,...])
+   [&lt;property&gt;=&lt;value&gt;]
+   [&lt;property&gt;=&lt;value&gt;]
+   [...]
+  }
+ </pre>
+ El nombre &lt;name&gt; ha de ser único entre todas las definiciones del contexto,
+ excepto con las definiciones de queries. La clase &lt;class&gt; ha de un nombre
+ completo de una clase instanciable. El parametro &lt;parameter&gt; son los parametros
+ del constructor. Tanto &lt;property&gt; como &lt;value&gt; se usan para asignar
+ propiedades de la clase mediante su seter o directamente en la propiedad privada.
+</div>
+
+<div class="title" style="padding-top:5px">Definición de Array</div>
+<div class="content" style="padding-top:0px">
+ <pre> Estructura:
+  array [&lt;name&gt;] of &lt;class&gt; {
+   [&lt;value&gt;]
+   [&lt;value&gt;]
+   [...]
+  }
+ </pre>
+ El nombre &lt;name&gt; ha de ser único entre todas las definiciones del contexto, excepto con las definiciones de queries
+ El valor &lt;value&gt; se usa para definir los vlares del array
+</div>
+
+<div class="title" style="padding-top:5px">Definición de Lista</div>
+<div class="content" style="padding-top:0px">
+ <pre> Estructura:
+  list [&lt;name&gt;]{
+   [&lt;value&gt;]
+   [&lt;value&gt;]
+   [...]
+  }
+ </pre>
+ El nombre &lt;name&gt; ha de ser único entre todas las definiciones del contexto, excepto con las definiciones de queries
+ El valor &lt;value&gt; se usa para definir los vlares del array
+</div>
+
+<div class="title" style="padding-top:5px">Definición de HashMap</div>
+<div class="content" style="padding-top:0px">
+ <pre> Estructura:
+  map [&lt;name&gt;] {
+   [{&lt;key&gt;,&lt;value&gt;}]
+   [{&lt;key&gt;,&lt;value&gt;}]
+   [...]
+  }
+ </pre>
+ El nombre &lt;name&gt; ha de ser único entre todas las definiciones del contexto, excepto con las definiciones de queries
+ La clave &lt;key&gt; es la clave del HashMap
+ El valor &lt;value&gt; es el valor para la clave &lt;key&gt; 
+</div>
+
+<div class="title" style="padding-top:5px">Definición de null</div>
+<div class="content" style="padding-top:0px">
+ <pre> Estructura:
+  null
+ </pre>
+ Es la definicion del valor null
+</div>
+ 
+<div class="title" style="padding-top:5px">Definición de literal String</div>
+<div class="content" style="padding-top:0px">
+ <pre> Estructura:
+  "&lt;value&gt;"
+ </pre>
+ El valor &lt;value&gt; es el contenido del String sin cambios.
+</div>
+ 
+<div class="title" style="padding-top:5px">Definición de literal numerica</div>
+<div class="content" style="padding-top:0px">
+ <pre> Estructura:
+  &lt;value&gt;
+ </pre>
+ El valor &lt;value&gt; es un número, usando el punto "." para decimales
+</div>
+
+<div class="title" style="padding-top:5px">Definición de literal booleana</div>
+<div class="content" style="padding-top:0px">
+ <pre> Estructura:
+  true|false
+ </pre>
+ Literal sin commillas, true para verdadero y false para falso. 
+</div>
+
+<div class="title" style="padding-top:5px">Definición de Queries</div>
+<div class="content" style="padding-top:0px">
+ <pre> Estructura:
+  query &lt;name&gt; [engine &lt;enginename&gt;|any] [type &lt;type&gt;] { &lt;querystr&gt; }
+ </pre>
+ El engine ha de coincidir con el especificado en el acceso a datos (case sensitive) any para cualquera,
+ si no se especifica engine, se asume any.<br>
+ Querystr puede contener información adicional usando la almoadilla como caracter de escape:
+ <ul>
+ <li>## Hace referencia a un tipo escalar unico</li>
+ <li>#[&lt;numero indice&gt;]# Hace referencia a un elemento de un array Ex: #1#,#2#,#10#</li>
+ <li>#&lt;nombre miembro&gt;# Hace referencia a una propiedad de un objeto, o a una clave en un hashmap Ex: #userName#,#userPwd#</li>
+ </ul>  
+&lt;/div&gt;
+&lt;/div&gt;
+</div>
+
+</div>
+</div>
+
+<div class="section">
+<div class="title">Conocimientos básicos:</div>
+<div class="content">
+ La base de datos por defecto de QCore contiene 2 grupos: Admin y Guest. Y un
+ usuario: admin (contraseña 1234), perteneciente al grupo Admin.
+ <p/>
+ El grupo guest es obigatorio, ya que es el grupo que se le asigna a los usuarios no logados.
+ es recomendable que no tenga permisos, pero que sea un gupo activo.
+ <p/>
+ El fichero de contexto ha de tener de forma obligatoria un objeto llamado QCoreConf. Ejemplo:<br>
+ <pre>
+object QCoreConf class nihao.QCoreConf{
+ loginConf=object class nihao.login.LoginConf{
+  modules=array of nihao.login.ILoginModule{
+   //object class nihao.login.LoginModuleSSL{}
+   object class nihao.login.LoginModuleRequest{}
+  };
+  pageLogin="login.jsp";
+  pageEnd=  "end.jsp";
+  pageError="error.jsp";"
+  pageForbidden="forbidden.jsp";
+  excluded=array of String{
+  };
+ }
+ worksetCacheSize=10;
+}
+ </pre>
+<pre>
+Uso en JSP:
+ Se usa a través del taglib de QCore, defeinir en cada página:
+  &lt;%@ taglib uri="http://www.xwolf.es/qcore" prefix="Q"%&gt;
+  para usar el taglib
+
+Id en tags
+ Para que el tag coja datos del Workset se vinculan mediante el mismo nombre de campo del workset que el id del tag.
+ En este caso el tag es de ida y vuelta (el valor se envia a la página, pero este también se notifica al servidor).
+ Existen casos especiales, para obtener valores, pero estos no serán enviados al servidor de manera natural.
+ Estos casos son:
+  · Nombres que empiezan por "|": Obtienen el valor de los atributos del PageContext, el nombre en el PageContext incluye
+  el simbolo "|"
+  · Nombres que empiezan por "@": Obtienen el valor del archivo de contexto de aplicación, sin incluir el simbolo inicial. 
+  · Nombres que empiezan por "$": Obtienen el valor de la sesión, sin incluir el simbolo inicial. 
+  · Nombres que empiezan por "%": Obtienen el valor de el parametro del request, sin incluir el simbolo inicial.
+  · Puntos en el nombre: Si los nombres de campo estan separados por ".", se realiza una navegación. por
+  los elementos de los objetos, pudiendo emplear cualquier profundidad. Si algún elemento en la ruta de
+  navegación, es null, se retorna null.
+ Para enviar al servidor hay que especificar el attributo send="&lt;nombre campo&gt;". Dónde
+  &lt;nombre campo&gt; es el nombre del campo del workset.
+ 
+
+Proveedores de acceso a datos:
+ Estructura:
+  object MainDatabaseConnection class xwolf.qcore.db.DataSourceProviderJNDI{("java:comp/env/jdbc/&lt;name&gt;")
+   engine="&lt;engine&gt;" //opcional
+  }
+  object MainDatabaseConnection class xwolf.qcore.db.DataSourceProviderJDBC{("jdbc:&lt;engine&gt;://&lt;host&gt;:3306/&lt;ddbb&gt;")
+   driver="&lt;driver to initialize&gt;" // opcional
+   engine="&lt;engine&gt;" //opcional
+   user="&lt;user&gt;"
+   password="&lt;password&gt;"
+  }
+</pre>
+</div>
+</div>
+  
+ </div>
+ </body>
+</html>

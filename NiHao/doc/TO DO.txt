@@ -1,0 +1,36 @@
+Acceso a datos
+Login
+TAGLIB
+
+Queryset (para los scripts tipo SQL+, pequeñas variables para diseñar pequeños procesos)
+
+Eliminar de la ram las instancias de queris definidas para engines no usados
+ (y eliminar las queries "any" si se definen las de cada engine particular disponible)
+
+Workset: 
+
+Workset <id> class <class path>
+ 
+Workflow:
+
+Workflow <id> workset <workset name>{
+<Workflow code>
+}
+
+Sample:
+
+Workset alumn class tester.workfow.AlumnBean
+// String alumno;HashMap<String,double> notas;String aula;
+
+Workflow setnote workset alumn{
+ begin:
+ go "\setAlumnData.jsp" for Director // for define el grupo al que se muestra el flujo
+ if [cancel] kill // kill, mata el flujo, reset lo resetea (reinstancia el workset y reinicia), pero sigue pendiente de hacer, drop suelta el flujo disponible por hacer, goto lo lleva a un paso en concreto
+ setNotes:
+ go "\setNotes.jsp" for Profesor where %user.aula%=#aula# // where filtra, %% define una variable de flujo ## una variable de workset
+ if [cancel] goto begin
+ if #allNotes# goto end
+ goto setNotes
+ end:  
+ go "\muestraNota.jsp" for Alumno where %user%=#aulmno#  
+}
