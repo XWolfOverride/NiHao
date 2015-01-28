@@ -74,19 +74,19 @@ changeset "NiHao:insert:basic user data" engine mysql author "NiHao"{
  insert into nhao_rel_usergroups (userid,groupid) values (1,2);
 }
 
-query nhaologn_getUserByNickPwd engine any type nihao.login.beans.DBUser{
- SELECT id,nick,display FROM nhao_users WHERE nick=#nick# AND pwd=#pwd# AND active=1
+query nhao_getUserByNickPwd engine any type nihao.login.beans.DBUser{
+ SELECT id,nick,name FROM nhao_users WHERE nick=#nick# AND pwd=#pwd# AND active=1
 }
 
-query nhaologn_getUserByNick engine any type nihao.login.beans.DBUser{
- SELECT id,nick,display FROM nhao_users WHERE nick=#nick# AND active=1
+query nhao_getUserByNick engine any type nihao.login.beans.DBUser{
+ SELECT id,nick,name FROM nhao_users WHERE nick=#nick# AND active=1
 }
 
-query nhaologn_getGroupsForUser engine any type nihao.login.Group{
+query nhao_getGroupsForUser engine any type nihao.login.Group{
  SELECT id,name FROM nhao_groups WHERE id IN (SELECT groupid FROM nhao_rel_usergroups WHERE userid=#id#) AND active=1
 }
 
-query nhaologn_getGroupByName engine any type nihao.login.Group{
+query nhao_getGroupByName engine any type nihao.login.Group{
  SELECT id,name FROM nhao_groups WHERE name=##
 }
 

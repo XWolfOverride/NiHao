@@ -564,7 +564,7 @@ public abstract class Context {
 		name = name.toLowerCase();
 		HashMap<String, Query> engines = queries.get(name);
 		if (engines == null)
-			new NiHaoException("Query '" + name + "' not found");
+			throw new NiHaoException("Query '" + name + "' not found");
 		Query result = engines.get(engine);
 		if (result == null && engine != null)
 			result = engines.get(null);

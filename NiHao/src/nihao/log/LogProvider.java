@@ -5,7 +5,7 @@ import nihao.Provider;
 import nihao.ProviderInfo;
 
 public abstract class LogProvider extends Provider {
-	private static ProviderInfo info = ProviderInfo.get(LogProvider.class,NilLogProvider.class);
+	private static ProviderInfo info = ProviderInfo.get(LogProvider.class, NilLogProvider.class);
 	private static LogProvider prov;
 
 	public static LogProvider getProvider() {
@@ -49,7 +49,12 @@ public abstract class LogProvider extends Provider {
 			if (sb.length() > 0)
 				sb.append(' ');
 			if (o instanceof Throwable) {
-
+				Throwable t = (Throwable) o;
+				sb.append('\n');
+				sb.append(t.getClass().getName());
+				sb.append(": ");
+				sb.append(t.getMessage());
+				sb.append('\n');
 			} else
 				sb.append(o);
 		}

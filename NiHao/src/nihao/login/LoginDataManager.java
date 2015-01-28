@@ -27,7 +27,7 @@ public class LoginDataManager extends DataManager {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("nick", nick);
 		map.put("pwd", Conversor.bytesToHex(Hasher.SHA1(Conversor.utf8ToBytes(pwd))));
-		DBUser[] users = selectAs("login_getUserByNickPwd", map, DBUser[].class);
+		DBUser[] users = selectAs("nhao_getUserByNickPwd", map, DBUser[].class);
 		if (users.length == 0)
 			return null;
 		if (users.length > 1)
@@ -38,7 +38,7 @@ public class LoginDataManager extends DataManager {
 	public User getUserByNick(String nick) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("nick", nick);
-		DBUser[] users = selectAs("login_getUserByNick", map, DBUser[].class);
+		DBUser[] users = selectAs("nhao_getUserByNick", map, DBUser[].class);
 		if (users.length == 0)
 			return null;
 		if (users.length > 1)
@@ -47,11 +47,11 @@ public class LoginDataManager extends DataManager {
 	}
 
 	public Group[] getUserGroups(User user) {
-		Group[] result = selectAs("login_getGroupsForUser", user, Group[].class);
+		Group[] result = selectAs("nhao_getGroupsForUser", user, Group[].class);
 		return result;
 	}
 
 	public Group getGroupByName(String name) {
-		return selectAs("login_getGroupByName", name,Group.class);
+		return selectAs("nhao_getGroupByName", name,Group.class);
 	}
 }

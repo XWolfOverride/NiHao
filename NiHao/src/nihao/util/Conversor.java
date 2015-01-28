@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -237,6 +238,20 @@ public class Conversor {
 		default:
 			throw new RuntimeException("32Bits Encoding not suported");
 		}
+	}
+
+	/**
+	 * Return a string with all the output of an exception (call stack included)
+	 * 
+	 * @param t
+	 *            Throwable
+	 * @return String
+	 */
+	public static String fullExceptionToString(Throwable t) {
+		Writer writer = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(writer);
+		t.printStackTrace(printWriter);
+		return writer.toString();
 	}
 
 	/**
