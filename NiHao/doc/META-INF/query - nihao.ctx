@@ -6,19 +6,20 @@
 // ===== CHANGESETS 
 changeset "BOOTSTRAP" engine any author "NiHao"{
  CREATE TABLE nhao_changesets (
-  id VARCHAR(128) NULL,
-  author VARCHAR(64) NULL,
-  executed TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  hash CHAR(64) NULL
+  id VARCHAR(128) NOT NULL PRIMARY KEY,
+  author VARCHAR(64) NOT NULL,
+  executed TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  hash CHAR(64) NOT NULL
  )
 }
 
 changeset "BOOTSTRAP" engine mysql author "NiHao"{
  CREATE TABLE `nhao_changesets` (
-  `id` VARCHAR(128) NULL,
-  `author` VARCHAR(64) NULL,
-  `executed` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  `hash` CHAR(64) NULL
+  `id` VARCHAR(128) NOT NULL,
+  `author` VARCHAR(64) NOT NULL,
+  `executed` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `hash` CHAR(64) NOT NULL,
+  PRIMARY KEY (id)
  ) CHARSET=utf8 COLLATE='utf8_general_ci' ENGINE=InnoDB
 }
 
@@ -35,7 +36,7 @@ query nhaochse_updateChange engine any{
 }
 
 // ===== LOGIN AND AUTHORIZATION
-changeset "HiHao:create:UsersTable" engine mysql author "NiHao"{
+changeset "NiHao:create:UsersTable" engine mysql author "NiHao"{
  CREATE TABLE nhao_users (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   nick VARCHAR(67) NOT NULL,
@@ -47,22 +48,24 @@ changeset "HiHao:create:UsersTable" engine mysql author "NiHao"{
   PRIMARY KEY (id)
  ) COLLATE=utf8_general_ci ENGINE=InnoDB
 }
-changeset "HiHao:create:GroupsTable" engine mysql author "NiHao"{
+changeset "NiHao:create:GroupsTable" engine mysql author "NiHao"{
  CREATE TABLE nhao_groups (
-  id INT UNSIGNED NOT NULL,
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   name VARCHAR(62) NOT NULL,
   active INT(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (id)
  ) COLLATE=utf8_general_ci ENGINE=InnoDB
 }
-changeset "HiHao:create:relUGTable" engine mysql author "NiHao"{
+changeset "NiHao:create:relUGTable" engine mysql author "NiHao"{
  CREATE TABLE nhao_rel_usergroups (
-  userid INT UNSIGNED NOT NULL REFERENCES nhao_users(id),
-  groupid INT UNSIGNED NOT NULL REFERENCES nhao_groups(id),
-  PRIMARY KEY (userid, groupid)
+  userid INT UNSIGNED NOT NULL,
+  groupid INT UNSIGNED NOT NULL,
+  PRIMARY KEY (userid, groupid),
+  FOREIGN KEY (userid) REFERENCES nhao_users(id),
+  FOREIGN KEY (groupid) REFERENCES nhao_groups(id)
  ) ENGINE=InnoDB;
 }
-changeset "HiHao:insert:basic user data" engine mysql author "NiHao"{
+changeset "NiHao:insert:basic user data" engine mysql author "NiHao"{
  insert into nhao_users (id,nick,pwd,name) values (1,'admin','7110EDA4D09E062AA5E4A390B0A572AC0D2C0220','Administrator');
  insert into nhao_groups (id,name,active) values (1,'Administrators',1);
  insert into nhao_groups (id,name,active) values (2,'Users',1);
