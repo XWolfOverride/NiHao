@@ -18,7 +18,10 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.xml.bind.DatatypeConverter;
+
 import nihao.NiHaoException;
+import nihao.types.TextEncoding;
 
 public class Conversor {
 	static final String ASCIICharset = "ISO-8859-1";
@@ -137,8 +140,7 @@ public class Conversor {
 	 * @return String
 	 */
 	public static String bytesToBase64(byte[] data) {
-		byte[] result = Base64Codec.encode(data);
-		return bytesToASCII(result);
+		return DatatypeConverter.printBase64Binary(data);
 	}
 
 	/**
@@ -149,7 +151,7 @@ public class Conversor {
 	 * @return Array de bytes
 	 */
 	public static byte[] base64ToBytes(String data64) {
-		return Base64Codec.decode(asciiToBytes(data64));
+		return DatatypeConverter.parseBase64Binary(data64);
 	}
 
 	/**
@@ -160,7 +162,7 @@ public class Conversor {
 	 * @return Array de bytes
 	 */
 	public static byte[] base64ToBytes(byte[] data64) {
-		return Base64Codec.decode(data64);
+		return DatatypeConverter.parseBase64Binary(bytesToASCII(data64));
 	}
 
 	/**
@@ -521,7 +523,7 @@ public class Conversor {
 	 * @return String
 	 */
 	public static String nvl(Object o, String nval) {
-		return o==null?nval:o.toString();
+		return o == null ? nval : o.toString();
 	}
 
 	/**

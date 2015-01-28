@@ -154,7 +154,7 @@ public class WebCall {
 	 * @param name
 	 *            String clave del valor, 4 tipos:<br>
 	 *            · si se antepone "@" se retorna un valor de <b>contexto</b><br>
-	 *            · si se antepone "$" se retorna un valor se <b>desión</b><br>
+	 *            · si se antepone "$" se retorna un valor se <b>sesión</b><br>
 	 *            · si se antepone "%" se retorna un valor de <b>atributo</b>
 	 *            del request<br>
 	 *            en cualquier otro caso, el campo hace referencia a un valor en

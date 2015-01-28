@@ -112,7 +112,7 @@ public class NetConnection extends HttpClient {
 			sended = true;
 			return connection.getInputStream();
 		} catch (IOException e) {
-			throw new QCoreNetException(getHttpCode(), e.getMessage(), connection.getErrorStream());
+			throw new NiHaoNetException(getHttpCode(), e.getMessage(), connection.getErrorStream());
 		}
 	}
 

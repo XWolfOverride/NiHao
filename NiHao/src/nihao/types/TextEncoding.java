@@ -1,4 +1,4 @@
-package nihao.util;
+package nihao.types;
 
 public enum TextEncoding {
 	/**
