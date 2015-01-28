@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import nihao.log.LogProvider;
 import nihao.login.Group;
 import nihao.login.LoginConf;
 import nihao.login.User;
@@ -23,8 +24,8 @@ import nihao.util.reflection.Reflector;
 
 public class WebCall {
 	private static final String LOGOUT_PARAMETER = "logout";
-	private static final String INFO_ID = "::QCORE:INFO";
-	private static final String ERROR_ID = "::QCORE:ERROR";
+	private static final String INFO_ID = "::NIHAO:INFO";
+	private static final String ERROR_ID = "::NIHAO:ERROR";
 	public static ThreadLocal<WebCall> currentWebCall = new ThreadLocal<WebCall>();
 
 	/**
@@ -226,6 +227,7 @@ public class WebCall {
 	 * Va a la página de error
 	 */
 	public void goError(Throwable t) throws IOException, ServletException {
+		LogProvider.getProvider().error("Call error: ",t);
 		rq.setAttribute(ERROR_ID, t);
 		go(NiHao.getConf().getLoginConf().getPageError());
 	}

@@ -1,7 +1,7 @@
 <project name="QCore" basedir="." default="build">
 	<property name="dest" value="release" />
 	<property name="mypath" value="." />
-	<property name="version" value="0.8b" />
+	<property name="version" value="0.8c" />
 	<basename file="${mypath}" property="myname" />
 	
 	<property name="bin" value="bin" />
