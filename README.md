@@ -18,3 +18,5 @@ Key features are:
 · Own and scalable taglib. Automatically linked to the worksets allowing easy access to user data between pages.
 
 All this features makes NiHao a great framework for fast and easy application development.
+
+Default niHao user is admin:1234
