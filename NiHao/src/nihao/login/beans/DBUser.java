@@ -5,7 +5,7 @@ import nihao.login.User;
 public class DBUser {
 	private long id;
 	private String nick;
-	private String display;
+	private String name;
 	private String pwd;
 
 	public long getId() {
@@ -24,12 +24,12 @@ public class DBUser {
 		this.nick = nick;
 	}
 
-	public String getDisplay() {
-		return display;
+	public String getName() {
+		return name;
 	}
 
-	public void setDisplay(String display) {
-		this.display = display;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPwd() {
@@ -43,7 +43,7 @@ public class DBUser {
 	public User toUser(){
 		User result=new User(id);
 		result.setNick(nick);
-		result.setName(display);
+		result.setName(name);
 		return result;
 	}
 }
